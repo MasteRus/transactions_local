@@ -1,6 +1,6 @@
 <?php
 
-namespace Infrastructure\Controller\Ping;
+namespace Infrastructure\Common\Controller;
 
 use Infrastructure\Common\Http\JsonResponder;
 use Infrastructure\Common\Http\JsonResponse;
