@@ -16,7 +16,8 @@
         "symfony/monolog-bundle": "*",
         "symfony/runtime": "5.4.*",
         "symfony/validator": "5.4.*",
-        "symfony/yaml": "5.4.*"
+        "symfony/yaml": "5.4.*",
+        "ext-bcmath": "*"
     },
     "config": {
         "allow-plugins": {

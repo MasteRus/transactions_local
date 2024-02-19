@@ -1,5 +1,9 @@
-controllers:
+controllers_common:
     resource: ../../src/Infrastructure/Common/Controller/
+    type: annotation
+
+controllers_transactions:
+    resource: ../../src/Infrastructure/Transactions/Controller/
     type: annotation
 
 kernel:

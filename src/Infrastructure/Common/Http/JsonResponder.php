@@ -48,14 +48,9 @@ final class JsonResponder
         return $this->respond($payload, $message, $status);
     }
 
-    public function respondFailValidation(ConstraintViolationListInterface $errors): JsonResponse
+    public function respondFailValidation(array $errors): JsonResponse
     {
-        $messages = [];
-        foreach ($errors as $error) {
-            $messages[$error->getPropertyPath()] = $error->getMessage();
-        }
-
-        return $this->respondFail('Validation errors', JsonResponse::HTTP_BAD_REQUEST, $messages);
+        return $this->respondFail('Validation errors', JsonResponse::HTTP_BAD_REQUEST, $errors);
     }
 
     public function respondFail(
