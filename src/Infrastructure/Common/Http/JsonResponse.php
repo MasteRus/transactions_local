@@ -32,7 +32,7 @@ class JsonResponse extends SymfonyJsonResponse
      * @param mixed $data
      * @return $this
      */
-    public function setData($data = [])
+    public function setData(mixed $data = []): static
     {
         parent::setData($data);
 
