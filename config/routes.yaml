@@ -1,12 +1,2 @@
-common:
-  resource:
-    path: ../src/Infrastructure/Common/Controller/
-    namespace: Infrastructure\Common\Controller\
-  type: attribute
 
-transactions:
-  resource:
-    path: ../src/Infrastructure/Transactions/Controller/
-    namespace: Infrastructure\Transactions\Controller\
-  type: attribute
 

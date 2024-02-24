@@ -1,11 +1,11 @@
 controllers_common:
     resource: ../../src/Infrastructure/Common/Controller/
-    type: annotation
+    type: attribute
 
 controllers_transactions:
     resource: ../../src/Infrastructure/Transactions/Controller/
-    type: annotation
+    type: attribute
 
 kernel:
     resource: ../../src/Infrastructure/Kernel.php
-    type: annotation
+    type: attribute
