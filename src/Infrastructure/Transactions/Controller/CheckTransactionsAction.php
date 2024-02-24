@@ -28,9 +28,7 @@ class CheckTransactionsAction
         $this->handler = $handler;
     }
 
-    /**
-     * @Route("/api/transactions/check", name="transactions_check", methods={"POST"})
-     */
+    #[Route('/api/transactions/check', name: 'transactions_check', methods: ['post'])]
     public function checkTransaction(CheckTransactionsPayload $payload): JsonResponse
     {
         try {

@@ -15,9 +15,7 @@ class PingAction
         $this->responder = $responder;
     }
 
-    /**
-     * @Route("/api/ping", name="ping", methods={"GET"})
-     */
+    #[Route('/api/ping', name: 'ping', methods: ['get'])]
     public function get(): JsonResponse
     {
         return $this->responder->respondSuccess([
