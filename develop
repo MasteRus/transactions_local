@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+if [ $# -gt 0 ]; then
+    if [ "$1" == "composer" ]; then
+        shift 1
+        docker-compose exec tr_php \
+            composer "$@"
+    elif [ "$1" == "console" ]; then
+        shift 1
+        docker-compose exec tr_php \
+            php ./bin/console "$@"
+    elif [ "$1" == "test" ]; then
+        shift 1
+        docker-compose exec tr_php \
+            php ./bin/phpunit -c phpunit.xml "$@"
+    else
+        echo "./develop: Unknown command '$@'"
+    fi
+else
+    echo "./develop: You must specify some command"
+fi
