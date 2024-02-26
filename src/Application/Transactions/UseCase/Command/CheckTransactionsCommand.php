@@ -4,7 +4,6 @@ namespace Application\Transactions\UseCase\Command;
 
 class CheckTransactionsCommand
 {
-
     private string $balance;
 
     private array $transactions;

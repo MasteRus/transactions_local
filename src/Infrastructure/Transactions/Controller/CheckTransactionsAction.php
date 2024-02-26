@@ -21,8 +21,7 @@ class CheckTransactionsAction
         JsonResponder $responder,
         RequestValidatorInterface $validator,
         CheckTransactionsHandler $handler
-    )
-    {
+    ) {
         $this->responder = $responder;
         $this->validator = $validator;
         $this->handler = $handler;

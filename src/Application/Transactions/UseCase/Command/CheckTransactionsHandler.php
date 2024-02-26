@@ -5,11 +5,10 @@ namespace Application\Transactions\UseCase\Command;
 use Exception;
 use Infrastructure\Transactions\Request\TransactionDto;
 use Infrastructure\Transactions\Response\TransactionResponseDto;
+use RuntimeException;
 
 class CheckTransactionsHandler
 {
-
-
     /**
      * @throws Exception
      */
@@ -24,10 +23,11 @@ class CheckTransactionsHandler
         (OK)Bet уменьшает баланс на сумму в amount, Win увеличивает.
         (OK)Если баланс ушел в минус, транзакция считается невалидной.
         (OK)Если транзакция не валидна, последующие транзакции с тем же orderId тоже считаются невалидными.
-        (OK)Если id транзакции повторяется, такая транзакция тоже не валидна, но остальные с тем же orderId должны быть обработаны.
+        (OK)Если id транзакции повторяется, такая транзакция тоже не валидна,
+        но остальные с тем же orderId должны быть обработаны.
          */
 
-        /** @var TransactionDto $transaction */
+        /** @var TransactionDto[] $transactions */
         $transactions = $command->getTransactions();
         foreach ($transactions as $transaction) {
             if (in_array($transaction->id, $usedIds, true)) {
@@ -37,12 +37,15 @@ class CheckTransactionsHandler
             }
             $usedIds[] = $transaction->id;
 
-            if (array_key_exists($transaction->orderId, $ordersValidity) && $ordersValidity[$transaction->orderId] === false) {
+            if (
+                array_key_exists($transaction->orderId, $ordersValidity) &&
+                $ordersValidity[$transaction->orderId] === false
+            ) {
                 $checker[] = new TransactionResponseDto($transaction, false);
                 continue;
             }
 
-            switch ($transaction->txType):
+            switch ($transaction->txType) :
                 case TransactionDto::TYPE_BET:
                     $balance = bcsub($balance, (string)$transaction->amount);
 
@@ -58,7 +61,7 @@ class CheckTransactionsHandler
                     $checker[] = new TransactionResponseDto($transaction, true);
                     break;
                 default:
-                    throw new \RuntimeException();
+                    throw new RuntimeException("Unknown Type of Transaction");
             endswitch;
         }
 

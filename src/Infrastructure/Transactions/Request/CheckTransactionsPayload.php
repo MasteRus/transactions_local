@@ -26,7 +26,7 @@ class CheckTransactionsPayload implements ConstraintsAwareRequestPayload
                 $this->transactions[] = new TransactionDto(
                     (int)$transaction['id'],
                     (int)$transaction['orderId'],
-                    (string)$transaction['amount'],
+                    (float)$transaction['amount'],
                     (string)$transaction['txType'],
                 );
             }
@@ -70,8 +70,7 @@ class CheckTransactionsPayload implements ConstraintsAwareRequestPayload
                                         ),
                                         'txType' => new Assert\Required([
                                                 new Assert\Choice(["Win", "Bet"]),
-                                            ]
-                                        ),
+                                            ]),
                                     ]
                                 ])
                             ])

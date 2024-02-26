@@ -4,8 +4,8 @@ namespace Infrastructure\Transactions\Request;
 
 class TransactionDto
 {
-    public const TYPE_BET = "Bet";
-    public const TYPE_WIN = "Win";
+    public const string TYPE_BET = "Bet";
+    public const string TYPE_WIN = "Win";
     public int $id;
     public int $orderId;
     public float $amount;

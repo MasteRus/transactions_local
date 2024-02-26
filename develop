@@ -13,6 +13,22 @@ if [ $# -gt 0 ]; then
         shift 1
         docker-compose exec tr_php \
             php ./bin/phpunit -c phpunit.xml "$@"
+    elif [ "$1" == "phpstan" ]; then
+        shift 1
+        docker-compose exec tr_php php ./vendor/bin/phpstan analyse
+    elif [ "$1" == "phpcs" ]; then
+        shift 1
+        docker-compose exec tr_php php ./vendor/bin/phpcs -p --cache
+    elif [ "$1" == "phpcbf" ]; then
+        shift 1
+        docker-compose exec tr_php php ./vendor/bin/phpcbf
+    elif [ "$1" == "check" ]; then
+        echo -e "\e[32m> Run tests \e[0m\n";
+        docker-compose exec tr_php php ./bin/phpunit -c phpunit.xml --stop-on-failure && \
+        echo -e "\n\e[32m> Run PHPStan \e[0m\n" && \
+        docker-compose exec tr_php php ./vendor/bin/phpstan analyse && \
+        echo -e "\e[32m> Run PHP CS \e[0m\n" && \
+        docker-compose exec tr_php php ./vendor/bin/phpcs -p --cache
     else
         echo "./develop: Unknown command '$@'"
     fi
