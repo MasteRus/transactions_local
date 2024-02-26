@@ -28,15 +28,11 @@ class JsonResponse extends SymfonyJsonResponse
         return $this->responseData['message'];
     }
 
-    /**
-     * @param mixed $data
-     * @return $this
-     */
     public function setData(mixed $data = []): static
     {
         parent::setData($data);
 
-        $this->responseData = \json_decode((string)$this->data, true);
+        $this->responseData = json_decode((string)$this->data, true, 512, JSON_THROW_ON_ERROR);
         return $this;
     }
 }

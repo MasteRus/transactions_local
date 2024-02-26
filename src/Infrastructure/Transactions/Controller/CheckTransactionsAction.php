@@ -41,6 +41,10 @@ class CheckTransactionsAction
             return $this->responder->respondFail($exception->getMessage());
         }
 
-        return $this->responder->respondSuccess($response);
+        return $this->responder->respondSuccess(
+            [
+                'transactions' => $response,
+            ]
+        );
     }
 }
