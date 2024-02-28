@@ -1,4 +1,4 @@
-image: php:8.3-fpm
+image: php:8.2-fpm
 
 stages:
   - build
