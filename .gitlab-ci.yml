@@ -42,7 +42,7 @@ phpcs:
   before_script:
     - echo "PHPCS START"
   script:
-    - vendor/bin/phpcs
+    - php ./vendor/bin/phpcs -p --cache
   stage: phpcs
   #cache:
   # key: "build-${CI_COMMIT_REF_SLUG}"
