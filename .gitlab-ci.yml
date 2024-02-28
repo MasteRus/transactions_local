@@ -2,11 +2,14 @@ image: php:8.2-fpm
 
 stages:
   - build
+  - phpstan
+  - phpcs
   - test
 
 composer:
   stage: build
   script:
+# Здесь закоммичено, т.к. у меня развернут gitlab нативно
 #    - apt-get update -yq
 #    - apt-get install git -yq
 #    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -24,6 +27,28 @@ composer:
   after_script:
     - echo "After script build-${CI_COMMIT_REF_SLUG}"
 
+phpstan:
+  before_script:
+    - echo "PHPSTAN START"
+  script:
+    - php -d memory_limit=2G vendor/bin/phpstan analyse
+  stage: phpstan
+  #cache:
+  # key: "build-${CI_COMMIT_REF_SLUG}"
+  dependencies:
+    - composer
+
+phpcs:
+  before_script:
+    - echo "PHPCS START"
+  script:
+    - vendor/bin/phpcs
+  stage: phpcs
+  #cache:
+  # key: "build-${CI_COMMIT_REF_SLUG}"
+  dependencies:
+    - composer
+
 test:
   before_script:
     - echo "Before script"
@@ -35,4 +60,6 @@ test:
   # key: "build-${CI_COMMIT_REF_SLUG}"
   dependencies:
     - composer
+
+
 
