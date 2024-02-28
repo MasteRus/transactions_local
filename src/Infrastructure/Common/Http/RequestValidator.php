@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface as SymfonyValidator
 class RequestValidator implements RequestValidatorInterface
 {
     private RequestStack $requestStack;
-    //TEst
     protected SymfonyValidator $validator;
     protected ConstraintViolationListInterface $errors;
 
