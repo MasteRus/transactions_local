@@ -1,11 +1,11 @@
 <?php
 
-namespace Infrastructure\Transactions\Request;
+namespace Application\Transactions\UseCase\Command;
 
 class TransactionDto
 {
-    public const string TYPE_BET = "Bet";
-    public const string TYPE_WIN = "Win";
+    public const TYPE_BET = "Bet";
+    public const TYPE_WIN = "Win";
     public int $id;
     public int $orderId;
     public float $amount;

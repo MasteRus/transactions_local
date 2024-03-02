@@ -13,6 +13,9 @@ if [ $# -gt 0 ]; then
         shift 1
         docker-compose exec tr_php \
             php ./bin/phpunit -c phpunit.xml "$@"
+    elif [ "$1" == "deptrac" ]; then
+        shift 1
+        docker-compose exec tr_php php ./vendor/bin/deptrac
     elif [ "$1" == "phpstan" ]; then
         shift 1
         docker-compose exec tr_php php ./vendor/bin/phpstan analyse
@@ -29,6 +32,8 @@ if [ $# -gt 0 ]; then
         docker-compose exec tr_php php ./vendor/bin/phpstan analyse && \
         echo -e "\e[32m> Run PHP CS \e[0m\n" && \
         docker-compose exec tr_php php ./vendor/bin/phpcs -p --cache
+        echo -e "\e[32m> Run Deptrac \e[0m\n" && \
+        docker-compose exec tr_php php ./vendor/bin/deptrac analyse
     else
         echo "./develop: Unknown command '$@'"
     fi
