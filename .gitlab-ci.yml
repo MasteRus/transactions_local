@@ -4,6 +4,7 @@ stages:
   - build
   - phpstan
   - phpcs
+  - phpdeptrac
   - test
 
 composer:
@@ -46,6 +47,15 @@ phpcs:
   stage: phpcs
   #cache:
   # key: "build-${CI_COMMIT_REF_SLUG}"
+  dependencies:
+    - composer
+
+phpdeptrac:
+  before_script:
+    - echo "PHPCS START"
+  script:
+    - php ./vendor/bin/deptrac analyze
+  stage: phpdeptrac
   dependencies:
     - composer
 
