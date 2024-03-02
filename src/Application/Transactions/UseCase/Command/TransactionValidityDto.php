@@ -1,10 +1,8 @@
 <?php
 
-namespace Infrastructure\Transactions\Response;
+namespace Application\Transactions\UseCase\Command;
 
-use Infrastructure\Transactions\Request\TransactionDto;
-
-class TransactionResponseDto
+class TransactionValidityDto
 {
     public int $id;
     public int $orderId;

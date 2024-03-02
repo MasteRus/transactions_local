@@ -4,7 +4,7 @@ namespace Tests\Application\UseCase\Command;
 
 use Application\Transactions\UseCase\Command\CheckTransactionsCommand;
 use Application\Transactions\UseCase\Command\CheckTransactionsHandler;
-use Infrastructure\Transactions\Request\TransactionDto;
+use Application\Transactions\UseCase\Command\TransactionDto;
 use PHPUnit\Framework\TestCase;
 
 class CheckTransactionHandlerTest extends TestCase
