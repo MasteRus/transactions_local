@@ -2,8 +2,8 @@
 
 namespace Infrastructure\Transactions\Request;
 
+use Application\Transactions\UseCase\Command\TransactionDto;
 use Infrastructure\Common\Http\ConstraintsAwareRequestPayload;
-use Infrastructure\Common\Http\RequestPayload;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CheckTransactionsPayload implements ConstraintsAwareRequestPayload

@@ -1,0 +1,73 @@
+parameters:
+    paths:
+        - ./src
+#        - ./vendor
+
+#  exclude_files:
+#    - '#.*test.*#'
+
+    layers:
+        -
+            name: Domain
+            collectors:
+                -
+                    type: directory
+                    regex: /src/Domain/.*
+        -
+            name: Application
+            collectors:
+                -
+                    type: directory
+                    regex: /src/Application/.*
+        -
+            name: Infrastructure
+            collectors:
+                -
+                    type: directory
+                    regex: /src/Infrastructure/.*
+#        -
+#            name: Vendor
+#            collectors:
+#                -
+#                    type: directory
+#                    regex: /vendor/.*
+
+    ruleset:
+        Domain:
+        Application:
+            - Domain
+        Infrastructure:
+            - Domain
+            - Application
+#            - Vendor
+
+#parameters:
+#    paths:
+#        - ./src
+#    exclude_files:
+#        - '#.*test.*#'
+#    layers:
+#        -
+#            name: Controller
+#            collectors:
+#                -
+#                    type: className
+#                    regex: .*Controller.*
+#        -
+#            name: Repository
+#            collectors:
+#                -
+#                    type: className
+#                    regex: .*Repository.*
+#        -
+#            name: Service
+#            collectors:
+#                -
+#                    type: className
+#                    regex: .*Service.*
+#    ruleset:
+#        Controller:
+#            - Service
+#        Service:
+#            - Repository
+#        Repository:

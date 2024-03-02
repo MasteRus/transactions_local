@@ -3,8 +3,6 @@
 namespace Application\Transactions\UseCase\Command;
 
 use Exception;
-use Infrastructure\Transactions\Request\TransactionDto;
-use Infrastructure\Transactions\Response\TransactionResponseDto;
 use RuntimeException;
 
 class CheckTransactionsHandler
@@ -31,7 +29,7 @@ class CheckTransactionsHandler
         $transactions = $command->getTransactions();
         foreach ($transactions as $transaction) {
             if (in_array($transaction->id, $usedIds, true)) {
-                $checker[] = new TransactionResponseDto($transaction, false);
+                $checker[] = new TransactionValidityDto($transaction, false);
                 $ordersValidity[$transaction->orderId] = false;
                 continue;
             }
@@ -41,7 +39,7 @@ class CheckTransactionsHandler
                 array_key_exists($transaction->orderId, $ordersValidity) &&
                 $ordersValidity[$transaction->orderId] === false
             ) {
-                $checker[] = new TransactionResponseDto($transaction, false);
+                $checker[] = new TransactionValidityDto($transaction, false);
                 continue;
             }
 
@@ -50,15 +48,15 @@ class CheckTransactionsHandler
                     $balance = bcsub($balance, (string)$transaction->amount);
 
                     if (bccomp($balance, '0') === -1) {
-                        $checker[] = new TransactionResponseDto($transaction, false);
+                        $checker[] = new TransactionValidityDto($transaction, false);
                         $ordersValidity[$transaction->orderId] = false;
                     } else {
-                        $checker[] = new TransactionResponseDto($transaction, true);
+                        $checker[] = new TransactionValidityDto($transaction, true);
                     }
                     break;
                 case TransactionDto::TYPE_WIN:
                     $balance = bcadd($balance, (string)$transaction->amount);
-                    $checker[] = new TransactionResponseDto($transaction, true);
+                    $checker[] = new TransactionValidityDto($transaction, true);
                     break;
                 default:
                     throw new RuntimeException("Unknown Type of Transaction");
