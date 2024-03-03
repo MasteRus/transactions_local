@@ -32,7 +32,9 @@ If a transaction id is repeated, that transaction is also invalid, but others wi
 
 I decided to implement DDD to solve this task; 
 
-Also, I tried this test to implement test task
+Also, this test task is for experiments with gitlabCI.
 
+# GitlabCI
 
-ТЕСТ В ОБРАТНОМ ПОРФДКЕ ПРОВЕРЬ
+I've created pipeline to check quality code from different utilities (PHPCS, PHPStan, Deptrac) and start tests.
+
