@@ -102,7 +102,7 @@ class CheckTransactionsActionTest extends ApiTestCase
         $this->assertResponseDataEquals('transactions', $expectedTransactions);
     }
 
-    public function testCheckTransactionsDuplicateIdSuccessTest(): void
+    public function testCheckTransactionsDuplicateIdNextWithSameOrderIdNotFailedSuccessTest(): void
     {
         $requestData = [
             'balance'      => 90.0,
@@ -120,7 +120,7 @@ class CheckTransactionsActionTest extends ApiTestCase
                     'txType'  => 'Bet'
                 ],
                 [
-                    'id'      => 3, //Next one with same OrderID also failed
+                    'id'      => 3, //Next one with same OrderID not failed
                     'orderId' => 1,
                     'amount'  => 5.01,
                     'txType'  => 'Bet',
@@ -138,6 +138,62 @@ class CheckTransactionsActionTest extends ApiTestCase
             ],
             [
                 'id'       => 1,
+                'orderId'  => 1,
+                'amount'   => 15.01,
+                'txType'   => 'Bet',
+                'validity' => false
+            ],
+            [
+                'id'       => 3,
+                'orderId'  => 1,
+                'amount'   => 5.01,
+                'txType'   => 'Bet',
+                'validity' => true
+            ],
+        ];
+        $this->request('POST', self::URL, $requestData);
+
+        $this->assertResponseIsSuccess();
+        $this->assertResponseDataFieldExists('transactions');
+        $this->assertResponseDataEquals('transactions', $expectedTransactions);
+    }
+
+    public function testCheckTransactionsIdNextWithSameOrderIdFailedSuccessTest(): void
+    {
+        $requestData = [
+            'balance'      => 10.0,
+            'transactions' => [
+                [
+                    'id'      => 1,
+                    'orderId' => 1,
+                    'amount'  => 5.01,
+                    'txType'  => 'Bet'
+                ],
+                [
+                    'id'      => 2, //Duplicate ID
+                    'orderId' => 1,
+                    'amount'  => 15.01,
+                    'txType'  => 'Bet'
+                ],
+                [
+                    'id'      => 3, //Next one with same OrderID not failed
+                    'orderId' => 1,
+                    'amount'  => 5.01,
+                    'txType'  => 'Bet',
+                ],
+            ]
+        ];
+
+        $expectedTransactions = [
+            [
+                'id'       => 1,
+                'orderId'  => 1,
+                'amount'   => 5.01,
+                'txType'   => 'Bet',
+                'validity' => true
+            ],
+            [
+                'id'       => 2,
                 'orderId'  => 1,
                 'amount'   => 15.01,
                 'txType'   => 'Bet',

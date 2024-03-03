@@ -16,7 +16,7 @@ class CheckTransactionsHandler
         $checker = $ordersValidity = $usedIds = [];
 
         /*
-        Транзакции обрабатываются от меньшего id к большему.
+        (OK)Транзакции обрабатываются от меньшего id к большему. В случае, если
 
         (OK)Bet уменьшает баланс на сумму в amount, Win увеличивает.
         (OK)Если баланс ушел в минус, транзакция считается невалидной.
@@ -27,10 +27,22 @@ class CheckTransactionsHandler
 
         /** @var TransactionDto[] $transactions */
         $transactions = $command->getTransactions();
+
+        usort($transactions, static function ($a, $b) use (&$transactions) {
+            $indexA = array_search($a, $transactions, true);
+            $indexB = array_search($b, $transactions, true);
+
+            if ($a->id === $b->id) {
+                return ($indexA < $indexB) ? -1 : 1;
+            }
+
+            return ($a->id < $b->id) ? -1 : 1;
+        });
+
         foreach ($transactions as $transaction) {
             if (in_array($transaction->id, $usedIds, true)) {
                 $checker[] = new TransactionValidityDto($transaction, false);
-                $ordersValidity[$transaction->orderId] = false;
+//                $ordersValidity[$transaction->orderId] = false;
                 continue;
             }
             $usedIds[] = $transaction->id;
