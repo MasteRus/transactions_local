@@ -65,4 +65,38 @@ class CheckTransactionHandlerTest extends TestCase
         $this->assertFalse($result[1]->validity);
         $this->assertFalse($result[2]->validity);
     }
+
+    public function testReverseOrderTest(): void
+    {
+        $balance = 10.0;
+        $transactions[] = new TransactionDto(2, 1, 100, TransactionDto::TYPE_BET);
+        $transactions[] = new TransactionDto(1, 1, 300, TransactionDto::TYPE_WIN);
+        $command = new CheckTransactionsCommand($balance, $transactions);
+        $handler = new CheckTransactionsHandler();
+        $result = $handler->handle($command);
+
+        $this->assertTrue($result[0]->validity);
+        $this->assertTrue($result[1]->validity);
+    }
+
+    public function testReverseOrderWithSameIdTest(): void
+    {
+        $balance = 10.0;
+        $transactions[] = new TransactionDto(2, 1, 100, TransactionDto::TYPE_BET);
+        $transactions[] = new TransactionDto(2, 2, 200, TransactionDto::TYPE_BET);
+        $transactions[] = new TransactionDto(3, 2, 1, TransactionDto::TYPE_WIN);
+        $transactions[] = new TransactionDto(1, 1, 300, TransactionDto::TYPE_WIN);
+        $command = new CheckTransactionsCommand($balance, $transactions);
+        $handler = new CheckTransactionsHandler();
+        $result = $handler->handle($command);
+
+
+        $this->assertTrue($result[0]->validity);
+        $this->assertTrue($result[1]->validity);
+        $this->assertFalse($result[2]->validity);
+        $this->assertTrue($result[3]->validity);
+        $this->assertEquals(100, $result[1]->amount);
+        $this->assertEquals(200, $result[2]->amount);
+        $this->assertEquals(3, $result[3]->id);
+    }
 }
