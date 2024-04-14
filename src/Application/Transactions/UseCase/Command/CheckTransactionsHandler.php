@@ -28,15 +28,15 @@ class CheckTransactionsHandler
         /** @var TransactionDto[] $transactions */
         $transactions = $command->getTransactions();
 
-        usort($transactions, static function ($a, $b) use (&$transactions) {
-            $indexA = array_search($a, $transactions, true);
-            $indexB = array_search($b, $transactions, true);
+        usort($transactions, static function ($elemA, $elemB) use (&$transactions) {
+            $indexA = array_search($elemA, $transactions, true);
+            $indexB = array_search($elemB, $transactions, true);
 
-            if ($a->id === $b->id) {
+            if ($elemA->id === $elemB->id) {
                 return ($indexA < $indexB) ? -1 : 1;
             }
 
-            return ($a->id < $b->id) ? -1 : 1;
+            return ($elemA->id < $elemB->id) ? -1 : 1;
         });
 
         foreach ($transactions as $transaction) {
