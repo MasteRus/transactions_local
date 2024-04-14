@@ -5,6 +5,7 @@ stages:
   - phpstan
   - phpcs
   - phpdeptrac
+  - phpmd
   - test
 
 composer:
@@ -52,10 +53,21 @@ phpcs:
 
 phpdeptrac:
   before_script:
-    - echo "PHPCS START"
+    - echo "DEPTRAC START"
   script:
     - php ./vendor/bin/deptrac analyze
   stage: phpdeptrac
+  dependencies:
+    - composer
+
+phpmd:
+  before_script:
+    - echo "PHPMD START"
+  script:
+    - php ./vendor/bin/phpmd src ansi phpmd.ruleset.xml
+  stage: phpmd
+  #cache:
+  # key: "build-${CI_COMMIT_REF_SLUG}"
   dependencies:
     - composer
 

@@ -2,8 +2,6 @@
 
 namespace Infrastructure\Common\Http;
 
-use Symfony\Component\Validator\ConstraintViolationListInterface;
-
 final class JsonResponder
 {
     /**
@@ -85,55 +83,5 @@ final class JsonResponder
     public function respondSuccess($payload = null, string $message = null): JsonResponse
     {
         return $this->respond($payload, $message);
-    }
-
-    /**
-     * @param mixed $payload
-     */
-    public function respondWithGridViewSuccess(
-        $payload = null,
-        array $pagination = null
-    ): JsonResponse {
-        return $this->respondSuccess([
-            'gridResponse' => [
-                'data' => $payload,
-                'messages' => [],
-                'pagination' => $pagination
-            ]
-        ]);
-    }
-
-    public function respondWithGridViewNotFound(
-        string $message
-    ): JsonResponse {
-        return $this->respondNotFound(
-            $message,
-            JsonResponse::HTTP_NOT_FOUND,
-            [
-                'gridResponse' => [
-                    'data' => [],
-                    'messages' => [$message],
-                    'pagination' => null
-                ]
-            ]
-        );
-    }
-
-    public function respondWithGridConfigViewSuccess(
-        string $uri,
-        array $columns,
-        array $filters,
-        bool $pagination = false
-    ): JsonResponse {
-        return $this->respondSuccess(
-            [
-                'uri' => $uri,
-                'gridConfig' => [
-                    'columns' => $columns,
-                    'filters' => $filters,
-                ],
-                'pagination' => $pagination
-            ]
-        );
     }
 }

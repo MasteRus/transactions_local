@@ -75,9 +75,11 @@
         }
     },
     "require-dev": {
+        "phpmd/phpmd": "^2.15",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^9.6",
         "qossmic/deptrac-shim": "^1.0",
+        "roave/security-advisories": "dev-latest",
         "squizlabs/php_codesniffer": "*",
         "symfony/browser-kit": "^7.0",
         "symfony/phpunit-bridge": "^7.0"
